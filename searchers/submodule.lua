@@ -1,6 +1,6 @@
 -- Searcher for returning url of module if it the parent module was imported using an url
 
-local virtualfs = require("../virtualfs")
+local virtualfs = require("virtualfs")
 
 return function(path)
     local url
