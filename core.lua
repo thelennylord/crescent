@@ -106,7 +106,6 @@ table.insert(_G.__SEARCHERS, function(path)
     if _G.__LOADED["virtualfs"] then            
         local func, err = fetchfile(url)
         if err then
-            print(err)
             return nil, false
         end
 
