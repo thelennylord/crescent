@@ -78,4 +78,4 @@ local crescent = loadstring(game:HttpGet("http://localhost:4507/loader.lua"))()
 ```
 
 # LICENSE
-[MIT](https://github.com/thelennylord/crescent/main/LICENSE)
+[MIT](https://github.com/thelennylord/crescent/blob/main/LICENSE)
