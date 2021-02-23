@@ -20,7 +20,6 @@
 -- Initialise global variables required for the loader
 _G.__ALIASES = {}
 _G.__SEARCHERS = {}
-_G.__READY = false
 _G.__SILENT = false
 
 -- Does the user's executor support hookfunction?
@@ -35,29 +34,40 @@ else
     baseurl = "https://raw.githubusercontent.com/thelennylord/crescent/main/"
 end
 
-local init = loadstring(game:HttpGet(baseurl .. "core.lua"))
-
 -- Function for adding aliases
 -- Accepts a key-value table of aliases, where the key is the alias and the value is the url
 local function add_alias(alias_table)
     for k, v in pairs(alias_table) do
         _G.__ALIASES[k] = v
-        if _G.__DEV then print(string.format("Added alias %s -> %s", k, v)) end
+        if not _G.__SILENT then print(string.format("Load alias %s (%s)", k, v)) end
     end
 end
 
--- Load aliases from crescent/alias.toml
--- Check if user has the needed functions to read/write files
-if readfile then
-    local success, file = pcall(readfile, "crescent.config.toml")
-    if success then    
-        -- A fork of lua-toml is being used to read toml files
-        -- Author: https://github.com/pocomane
-        -- Repo: https://github.com/pocomane/lua-toml
-        local toml = loadstring(game:HttpGet("https://raw.githubusercontent.com/pocomane/lua-toml/master/toml.lua"))()    
-        local aliases = toml.parse(file)
-        add_alias(aliases.aliases)
+_G.__FORCERELOAD = _G.__FORCERELOAD or false
+local init = function()
+    if _G.__READY and not _G.__FORCERELOAD then
+        _G.__FORCERELOAD = true
+        return warn("crescent has already been loaded; execute again to reload.")
     end
+
+    _G.__READY = false
+    _G.__FORCERELOAD = false
+
+    -- Load aliases from crescent/alias.toml
+    -- Check if user has the needed functions to read/write files
+    if readfile then
+        local success, file = pcall(readfile, "crescent.config.toml")
+        if success then    
+            -- A fork of lua-toml is being used to read toml files
+            -- Author: https://github.com/pocomane
+            -- Repo: https://github.com/pocomane/lua-toml
+            local toml = loadstring(game:HttpGet("https://raw.githubusercontent.com/pocomane/lua-toml/master/toml.lua"))()    
+            local aliases = toml.parse(file)
+            add_alias(aliases.aliases)
+        end
+    end
+
+    return loadstring(game:HttpGet(baseurl .. "core.lua"))()
 end
 
 -- Function for adding searchers
