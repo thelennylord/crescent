@@ -21,6 +21,7 @@
 _G.__ALIASES = {}
 _G.__SEARCHERS = {}
 _G.__READY = false
+_G.__SILENT = false
 
 -- Does the user's executor support hookfunction?
 if not hookfunction then
@@ -71,9 +72,14 @@ local function add_searcher(searchers)
     end
 end
 
+local function silent(value)
+    _G.__SILENT = value
+end
+
 -- Return functions to the user
 return {
     add_searcher = add_searcher,
     add_alias = add_alias,
-    init = init
+    init = init,
+    silent = silent
 }

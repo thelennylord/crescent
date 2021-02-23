@@ -68,6 +68,8 @@ local function nrequire(path)
             local cached = _G.__LOADED[ret]
             if cached then return cached end
             
+            if not _G.__SILENT then print(string.format("Download %s", url)) end
+
             local func, err = fetchfile(ret)
             if err then
                 return error(err)
