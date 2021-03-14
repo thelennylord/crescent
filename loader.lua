@@ -5,7 +5,7 @@
     Example script of loading in crescent:
 
     ```lua
-    local crescent = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
+    local crescent = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
 
     -- Add extra aliases
     crescent.add_alias({
@@ -61,13 +61,13 @@ local init = function()
             -- A fork of lua-toml is being used to read toml files
             -- Author: https://github.com/pocomane
             -- Repo: https://github.com/pocomane/lua-toml
-            local toml = loadstring(game:HttpGet("https://raw.githubusercontent.com/pocomane/lua-toml/master/toml.lua"))()    
+            local toml = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/pocomane/lua-toml/master/toml.lua"))()    
             local aliases = toml.parse(file)
             add_alias(aliases.aliases)
         end
     end
 
-    return loadstring(game:HttpGet(baseurl .. "core.lua"))()
+    return loadstring(game:HttpGetAsync(baseurl .. "core.lua"))()
 end
 
 -- Function for adding searchers

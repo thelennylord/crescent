@@ -6,7 +6,7 @@ local virtualfs
 
 -- Helper functions
 local function fetchfile(url)
-    local success, res = pcall(game.HttpGet, game, url)
+    local success, res = pcall(game.HttpGetAsync, game, url)
     if not success then
         if res == "HTTP 404 (NOT FOUND)" then
             return nil, string.format("attempt to require a non-existent module '%s'", url)
@@ -115,7 +115,7 @@ table.insert(_G.__SEARCHERS, function(path)
         _G.__LOADED[url] = func
         return func
     else
-        local success, res = pcall(game.HttpGet, game, url)
+        local success, res = pcall(game.HttpGetAsync, game, url)
         if not success then
             return nil, false
         end

@@ -11,7 +11,7 @@ Your executor needs to support the following functions:
 ## Installation
 Add the following script to your executor's autoexec folder to get started.
 ```lua
-local crescent = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
+local crescent = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
 
 crescent.init()
 ```
@@ -46,7 +46,7 @@ myOtherScript = "https://example.com/path/to/another/file.lua"
 ### Defining aliases upon initialisation
 Aliases can be added when crescent is about to load. This is done by editing the script which loads crescent. The crescent loader script returns three functions, one of them being the `add_alias` function. This function is used to define aliases. Example of adding aliases using the `add_alias` function is given below:
 ```lua
-local crescent = loadstring(game:HttpGet("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
+local crescent = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/thelennylord/crescent/main/loader.lua"))()
 
 -- Define aliases here
 crescent.add_alias({
@@ -73,7 +73,7 @@ To enable the development environment, you need the following prerequisite:
 To enable the development environment, make sure to set `_G.__DEV = true` before loading in crescent as this tells crescent to use the local server to fetch the core modules. The local server is a simple file server which uses Deno. Run the `dev.bat` file to start the local server and now load `loader.lua` using the local server's url. Your script should look something like this:
 ```lua
 _G.__DEV = true
-local crescent = loadstring(game:HttpGet("http://localhost:4507/loader.lua"))()
+local crescent = loadstring(game:HttpGetAsync("http://localhost:4507/loader.lua"))()
 -- Remaining code...
 ```
 
